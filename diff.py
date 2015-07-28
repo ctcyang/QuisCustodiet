@@ -52,7 +52,7 @@ def main():
 	assert(not redirects("tvtropes.org","/pmwiki/pmwiki.php/WesternAnimation/SamuraiJack"))
  	assert(redirects("tvtropes.org", "/pmwiki/pmwiki.php/Main/SamuraiJack"))
   #assert(redirects("tvtropes.org", "/pmwiki/pmwiki.php/Main/MurderOne"))
-	with open('filteredworks2.txt') as f:
+	with open('filteredworks4.txt') as f:
 		pages = f.readlines()
 		pages = [page.strip() for page in pages]
 		#works = set(page for page in pages)

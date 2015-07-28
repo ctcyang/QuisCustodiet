@@ -10,7 +10,7 @@ import pdb
 cats = []
 
 def get_category(url):
-  if 'pmwiki.php/' not in url or 'com/' not in url:
+  if 'pmwiki.php/' not in url or 'com/' not in url not in url:
     return None
   else:
     #pdb.set_trace()
@@ -46,7 +46,7 @@ def main():
   assert(not redirects("tvtropes.org","/pmwiki/pmwiki.php/WesternAnimation/SamuraiJack"))
   assert(redirects("tvtropes.org", "/pmwiki/pmwiki.php/Main/SamuraiJack"))
   #assert(redirects("tvtropes.org", "/pmwiki/pmwiki.php/Main/MurderOne"))
-  with open('works2.txt') as f:
+  with open('works4.txt') as f:
     pages = f.readlines()
     pages = [page.strip() for page in pages]
     works = set(page for page in pages if is_work(page))
