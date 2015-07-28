@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 '''
   @author: Josh Snider
 '''
@@ -12,6 +12,7 @@ import re
 import requests
 import sqlite3
 import sys
+import os
 
 def add_schema(url):
   if not url.startswith('http'):
@@ -53,7 +54,7 @@ class Tropes(object):
           page = requests.get(add_schema(url)).text
           self.add_page(url, page)
         except:
-          print('FATAL ERROR: Could not get page %s.' % url, file=sys.stderr)
+          print 'FATAL ERROR: Could not get page %s.' % url, sys.stderr
 
   def count_references(self, url):
     self.c.execute('SELECT count(page_to) FROM edges where page_from=?', (url,))
@@ -120,7 +121,7 @@ class Tropes(object):
         page = requests.get(url).text
         self.add_page(url, page)
       except:
-        print('FATAL ERROR: Could not get page %s.' % url, file=sys.stderr)
+        print >> 'FATAL ERROR: Could not get page %s.' % url#, sys.stderr
     return page
 
   def get_shoutouts(self, url):
@@ -131,7 +132,7 @@ class Tropes(object):
       soup = BeautifulSoup(page)
       soup = soup.find("div", {"id": "wikitext"})
       if soup == None:
-        print("INVALID PAGE:" + url, file=sys.stderr)
+        print >> "INVALID PAGE:" + url, sys.stderr
         print(page)
         shoutouturl = add_schema(self.base_url + "ShoutOut/"
           + url.split('/')[-1])
@@ -251,5 +252,6 @@ class Tropes(object):
 
 if __name__ == '__main__':
   with Tropes(False) as tropes:
-    print(tropes.edges_as_json(tropes.list_edges()))
+		tropes.replicate()
+		print(tropes.edges_as_json(tropes.list_edges()))
 

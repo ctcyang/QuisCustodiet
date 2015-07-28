@@ -1,16 +1,16 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 '''
   @author: Josh Snider
   Various filters for TvTropes pages.
 '''
-import http.client as httplib
-from urllib.parse import urlparse
+import httplib
+from urlparse import urlparse
 import pdb
 
 cats = []
 
 def get_category(url):
-  if 'pmwiki.php/' not in url:
+  if 'pmwiki.php/' not in url or 'com/' not in url:
     return None
   else:
     #pdb.set_trace()
@@ -20,6 +20,8 @@ def get_category(url):
 
 def is_work(url):
   cat = get_category(url)
+  #if cat not in cats:
+  #	print url, cat
   return cat in cats
 
 def redirects(host, path):
@@ -41,23 +43,23 @@ def setup():
 def main():
   assert(not redirects("tvtropes.org", "/"))
   assert(not redirects("tvtropes.org", "/asdfsadf"))
-  assert(not redirects("tvtropes.org",
-    "/pmwiki/pmwiki.php/WesternAnimation/SamuraiJack"))
+  assert(not redirects("tvtropes.org","/pmwiki/pmwiki.php/WesternAnimation/SamuraiJack"))
   assert(redirects("tvtropes.org", "/pmwiki/pmwiki.php/Main/SamuraiJack"))
-  assert(redirects("tvtropes.org", "/pmwiki/pmwiki.php/Main/MurderOne"))
-  with open('works.txt') as f:
+  #assert(redirects("tvtropes.org", "/pmwiki/pmwiki.php/Main/MurderOne"))
+  with open('works2.txt') as f:
     pages = f.readlines()
     pages = [page.strip() for page in pages]
-    #works = set(page for page in pages if is_work(page))
-    #cats = list(works)
-    #works = [work for work in works]
-    #for work in works:
-    #  print(work)
+    works = set(page for page in pages if is_work(page))
+    cats = list(works)
+    works = [work for work in works]
+    for work in works:
+      print(work)
     #pages = pages[pages.index("http://tvtropes.org/pmwiki/pmwiki.php/Recap/NarutoHuntForUchihaArc") + 1:]
     for page in pages:
       url = urlparse(page)
-      if not redirects(url.netloc, url.path):
-        print(page)
+    #  if not redirects(url.netloc, url.path):
+	#	if redirects(url.netloc, url.path):
+	#	print(page)
 
 setup()
 if __name__ == "__main__":

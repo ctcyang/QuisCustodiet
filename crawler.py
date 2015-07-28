@@ -33,3 +33,6 @@ class TropesSpider(Spider):
               print url
               self.crawled.add(url)
               yield Request(url, callback=self.parse)
+
+    #custom_settings = { "DOWNLOAD_DELAY": 2,
+	#				    "CONCURRENT_REQUESTS_PER_DOMAIN": 2}
