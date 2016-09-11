@@ -1,5 +1,11 @@
-#### QuisCustodiet
+# TVTropes Analyzer
 
-This represents my initial forays into data mining.
-[https://www.joshuasnider.com/QisCustodiet](This blog post)
-shows the results and some more explanation.
+Forked from https://github.com/jsnider3
+
+## filters.py:
+```
+python filters.py works.txt > output.txt
+```
+Using all parsed pages **works.txt** and categories we care about **cats.txt**, an output list of works from categories we care about.
+
+## 
