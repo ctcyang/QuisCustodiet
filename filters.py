@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 '''
-  @author: Josh Snider
-  Various filters for TvTropes pages.
+  Various filters for TVTropes pages.
 '''
+import sys
 import httplib
 from urlparse import urlparse
 import pdb
@@ -46,20 +46,26 @@ def main():
   assert(not redirects("tvtropes.org","/pmwiki/pmwiki.php/WesternAnimation/SamuraiJack"))
   assert(redirects("tvtropes.org", "/pmwiki/pmwiki.php/Main/SamuraiJack"))
   #assert(redirects("tvtropes.org", "/pmwiki/pmwiki.php/Main/MurderOne"))
-  with open('works4.txt') as f:
-    pages = f.readlines()
-    pages = [page.strip() for page in pages]
-    works = set(page for page in pages if is_work(page))
-    cats = list(works)
-    works = [work for work in works]
-    for work in works:
-      print(work)
-    #pages = pages[pages.index("http://tvtropes.org/pmwiki/pmwiki.php/Recap/NarutoHuntForUchihaArc") + 1:]
-    for page in pages:
-      url = urlparse(page)
-    #  if not redirects(url.netloc, url.path):
-	#	if redirects(url.netloc, url.path):
-	#	print(page)
+  if(len(sys.argv) == 2):
+    try:
+      with open(sys.argv[1]) as f:
+        pages = f.readlines()
+        pages = [page.strip() for page in pages]
+        works = set(page for page in pages if is_work(page))
+        cats = list(works)
+        works = [work for work in works]
+        for work in works:
+          print(work)
+        #pages = pages[pages.index("http://tvtropes.org/pmwiki/pmwiki.php/Recap/NarutoHuntForUchihaArc") + 1:]
+        for page in pages:
+          url = urlparse(page)
+        #  if not redirects(url.netloc, url.path):
+  	  #	if redirects(url.netloc, url.path):
+  	  #	print(page)
+    except Exception as e:
+      print e
+  else:
+      print "Usage: python filters.py"
 
 setup()
 if __name__ == "__main__":
